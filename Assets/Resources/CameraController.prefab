@@ -25,6 +25,7 @@ GameObject:
   - 4: {fileID: 421330}
   - 114: {fileID: 11489880}
   - 114: {fileID: 11450400}
+  - 114: {fileID: 11421038}
   m_Layer: 0
   m_Name: CameraController
   m_TagString: Untagged
@@ -136,6 +137,18 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 122990}
   m_Enabled: 1
+--- !u!114 &11421038
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 118270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed0c4d125749b4042be93a812a7c8c51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  networkManager: {fileID: 0}
 --- !u!114 &11450400
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -37,18 +37,6 @@ public class NetworkManager : MonoBehaviour
     void OnJoinedRoom()
     {
         spawnPlayer();
-        int emptyTableID = 0;
-
-        for (emptyTableID = 0; emptyTableID < tablesOccupied.Length; emptyTableID++)
-        {
-            if (!tablesOccupied[emptyTableID])
-            {
-                cameraController.GetComponent<PhotonView>().RPC("OccupyTable", PhotonTargets.AllBufferedViaServer, emptyTableID);
-                break;
-            }
-        }
-
-        cameraController.transform.position = tables[emptyTableID].transform.position;
         cameraController.SetActive(true);
     }
 
@@ -57,20 +45,17 @@ public class NetworkManager : MonoBehaviour
         cameraController = PhotonNetwork.Instantiate("CameraController", new Vector3(0f, 0.5f, 0f), Quaternion.identity, 0);
     }
 
-    void OnLeftRoom()
-    {
-
-    }
-
     [RPC]
     void OccupyTable(int tableID)
     {
+        Debug.Log("Someone is trying to occupy table " + tableID);
         tablesOccupied[tableID] = true;
     }
 
     [RPC]
     void LeaveTable(int tableID)
     {
+        Debug.Log("Someone is trying to leave table " + tableID);
         tablesOccupied[tableID] = false;
     }
 
