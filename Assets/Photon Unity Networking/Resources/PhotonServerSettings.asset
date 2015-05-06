@@ -33,4 +33,6 @@ MonoBehaviour:
   - PunRespawn
   - RequestForPickupTimes
   - TaggedPlayer
+  - LeaveTable
+  - OccupyTable
   DisableAutoOpenWizard: 0

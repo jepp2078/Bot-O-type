@@ -187,6 +187,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e554a44c896d544a7d2cac3ec9cc6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tables:
+  - {fileID: 2134360316}
+  - {fileID: 1876926295}
+  tablesOccupied: 0000
+  photonView: {fileID: 0}
 --- !u!4 &202182927
 Transform:
   m_ObjectHideFlags: 0
