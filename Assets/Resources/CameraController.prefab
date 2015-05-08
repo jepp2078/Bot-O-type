@@ -26,6 +26,7 @@ GameObject:
   - 114: {fileID: 11489880}
   - 114: {fileID: 11450400}
   - 114: {fileID: 11421038}
+  - 114: {fileID: 11468554}
   m_Layer: 0
   m_Name: CameraController
   m_TagString: Untagged
@@ -174,6 +175,20 @@ MonoBehaviour:
   viewIdField: 0
   instantiationId: -1
   isRuntimeInstantiated: 0
+--- !u!114 &11468554
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 118270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66bffd1f5019d114ebded6f8829d3bed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectArray: []
+  camera: {fileID: 0}
+  RobotBase: {fileID: 0}
 --- !u!114 &11484092
 MonoBehaviour:
   m_ObjectHideFlags: 1
