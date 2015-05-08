@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed0c4d125749b4042be93a812a7c8c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkManager: {fileID: 0}
+  currentTableID: 0
 --- !u!114 &11450400
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -207,9 +207,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookSpeed: 1
   moveSpeed: .100000001
-  zoomSpeed: 10
+  zoomSpeed: 2
+  maxDistance: 4
   camera: {fileID: 122990}
   cameraPitch: {fileID: 116324}
+  focusObject: {fileID: 0}
+  distance: 0
 --- !u!124 &12490016
 Behaviour:
   m_ObjectHideFlags: 1
