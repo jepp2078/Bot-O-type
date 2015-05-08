@@ -206,13 +206,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookSpeed: 1
-  moveSpeed: .100000001
+  moveSpeed: .0199999996
   zoomSpeed: 2
-  maxDistance: 4
+  maxDistance: 1
+  maxZoom: 2.5
   camera: {fileID: 122990}
   cameraPitch: {fileID: 116324}
   focusObject: {fileID: 0}
-  distance: 0
+  tempCameraPos: {x: 0, y: 0, z: 0}
 --- !u!124 &12490016
 Behaviour:
   m_ObjectHideFlags: 1

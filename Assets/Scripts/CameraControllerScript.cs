@@ -3,13 +3,15 @@ using System.Collections;
 
 public class CameraControllerScript : MonoBehaviour {
 
-    public float lookSpeed, moveSpeed, zoomSpeed, maxDistance;
+    public float lookSpeed, moveSpeed, zoomSpeed, maxDistance, maxZoom;
     public GameObject camera, cameraPitch, focusObject;
+
+    //temp
+    public Vector3 tempCameraPos = Vector3.zero;
 
     private float rotationX = 0, rotationY = 0;
     private float rotationCenterX = 0, rotationCenterY = 0;
     private float zoomPos = -10, oldZoomPos;
-    public float distance;
 
     private Vector3 cameraPos = new Vector3();
 
@@ -22,9 +24,14 @@ public class CameraControllerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         oldZoomPos = camera.transform.localPosition.z;
-        distance = Vector3.Distance(focusObject.transform.position, camera.transform.position);
+        //distance = Vector3.Distance(focusObject.transform.position, camera.transform.position);
 
-        zoomPos += Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+        float tempZoom = zoomPos + Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+        if (-tempZoom > 0 && -tempZoom < maxZoom)
+        { 
+            zoomPos += Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+        }
+
         
         if(Input.GetButton("Fire1")){
             rotationX += Input.GetAxis("Mouse X") * lookSpeed;
@@ -39,8 +46,19 @@ public class CameraControllerScript : MonoBehaviour {
         {
             cameraPos = new Vector3(moveSpeed * Input.GetAxis("Mouse X"), 0, moveSpeed * Input.GetAxis("Mouse Y"));
 
-            transform.position += -transform.forward * moveSpeed * Input.GetAxis("Mouse Y");
-            transform.position += -transform.right * moveSpeed * Input.GetAxis("Mouse X");
+            tempCameraPos = transform.position + -transform.right * moveSpeed * Input.GetAxis("Mouse X");
+            tempCameraPos = tempCameraPos + -transform.forward * moveSpeed * Input.GetAxis("Mouse Y");
+
+            if (tempCameraPos.x <= focusObject.transform.position.x + maxDistance && tempCameraPos.x >= focusObject.transform.position.x - maxDistance)
+            {
+                transform.position = new Vector3(tempCameraPos.x, transform.position.y, transform.position.z);
+            }
+            if (tempCameraPos.z <= focusObject.transform.position.z + maxDistance && tempCameraPos.z >= focusObject.transform.position.z - maxDistance)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y, tempCameraPos.z);
+            }
+
+
         }
 
         camera.transform.localPosition = new Vector3(0, 0, Mathf.Lerp(oldZoomPos,zoomPos,Time.deltaTime*10));
