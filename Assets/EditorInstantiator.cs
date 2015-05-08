@@ -21,7 +21,10 @@ public class EditorInstantiator : MonoBehaviour {
             }
         }
 
-        this.gameObject.transform.position = networkManager.tables[emptyTableID].transform.position + new Vector3(0, 0.5f, 0);
+
+        this.gameObject.transform.position = networkManager.tables[emptyTableID].transform.position + new Vector3(0, 0.5f, 0);//Setting the camara start position
+        this.gameObject.GetComponent<CameraControllerScript>().focusObject = networkManager.tables[emptyTableID]; //Setting the camara focus object to the desired table.
+
 	}
     void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
     {
