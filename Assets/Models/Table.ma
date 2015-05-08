@@ -1,6 +1,6 @@
 //Maya ASCII 2015 scene
 //Name: Table.ma
-//Last modified: Fri, May 08, 2015 05:15:48 PM
+//Last modified: Fri, May 08, 2015 05:28:44 PM
 //Codeset: 1252
 requires maya "2015";
 currentUnit -l centimeter -a degree -t film;
