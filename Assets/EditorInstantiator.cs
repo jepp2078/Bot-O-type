@@ -21,7 +21,7 @@ public class EditorInstantiator : MonoBehaviour {
             }
         }
 
-        this.gameObject.transform.position = networkManager.tables[emptyTableID].transform.position;
+        this.gameObject.transform.position = networkManager.tables[emptyTableID].transform.position + new Vector3(0, 0.5f, 0);
 	}
     void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
     {
