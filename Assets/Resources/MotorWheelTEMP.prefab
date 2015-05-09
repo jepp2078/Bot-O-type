@@ -141,7 +141,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 108606}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.819794655, y: 1.18873274, z: -7.35503292}
+  m_LocalPosition: {x: -3.75494766, y: .150000006, z: -9.44975281}
   m_LocalScale: {x: .0500000007, y: .0500000007, z: .0500000007}
   m_Children:
   - {fileID: 415962}
@@ -349,7 +349,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 151010}
   serializedVersion: 2
-  m_Mass: 2
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: .0500000007
   m_UseGravity: 1
@@ -364,7 +364,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 108606}
   serializedVersion: 2
-  m_Mass: 5
+  m_Mass: 30
   m_Drag: 0
   m_AngularDrag: .0500000007
   m_UseGravity: 1
@@ -378,7 +378,7 @@ MeshCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 151010}
-  m_Material: {fileID: 13400000, guid: 96e0a654e96d56a41bf3b2939b13198d, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -586,7 +586,7 @@ ConfigurableJoint:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
-  m_EnablePreprocessing: 1
+  m_EnablePreprocessing: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

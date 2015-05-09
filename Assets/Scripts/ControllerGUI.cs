@@ -140,9 +140,18 @@ public class ControllerGUI : MonoBehaviour {
                 Debug.DrawRay(ray.origin, ray.direction, Color.blue, 1f, true);
 
                 Vector3 target = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                if (Input.GetButtonDown("RotateC"))
+                {
+                    currentObject.transform.Rotate(Vector3.up, 45f);
+
+                }
+                else if (Input.GetButtonDown("RotateCCW"))
+                {
+                    currentObject.transform.Rotate(Vector3.up, -45f);
+
+                }
 
                 //fucking dragons
-                //currentObject.transform.Rotate(Vector3.up, Input.GetAxis("Mouse ScrollWheel") * 100);
 
                 //Vector3 offset = currentObject.transform.position - currentObject.GetComponent<Collider>().bounds.;
                 //Vector3 offset = currentObject.transform.position - currentObject.GetComponent<Collider>().ClosestPointOnBounds(hit.point);
