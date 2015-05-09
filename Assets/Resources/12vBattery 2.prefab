@@ -26,6 +26,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 486340}
   - 95: {fileID: 9506686}
+  - 54: {fileID: 5409612}
+  - 65: {fileID: 6577794}
+  - 114: {fileID: 11435744}
+  - 114: {fileID: 11461122}
   m_Layer: 0
   m_Name: 12vBattery 2
   m_TagString: Untagged
@@ -43,7 +47,6 @@ GameObject:
   - 4: {fileID: 438806}
   - 33: {fileID: 3392190}
   - 23: {fileID: 2314982}
-  - 65: {fileID: 6529848}
   m_Layer: 0
   m_Name: pCube1
   m_TagString: Untagged
@@ -111,7 +114,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 127434}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.375999987, y: 1.16700006, z: 2.38899994}
+  m_LocalPosition: {x: 0, y: .933300018, z: 0}
   m_LocalScale: {x: .0110194441, y: .0110194413, z: .0110194413}
   m_Children:
   - {fileID: 438806}
@@ -212,18 +215,33 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 161936}
   m_Mesh: {fileID: 4300000, guid: 9cba90ad474a85d49aeb07ac78542edb, type: 3}
---- !u!65 &6529848
+--- !u!54 &5409612
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 127434}
+  serializedVersion: 2
+  m_Mass: 2.70000005
+  m_Drag: 0
+  m_AngularDrag: .0500000007
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &6577794
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 161936}
+  m_GameObject: {fileID: 127434}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.00000012, y: .996917367, z: .99999994}
-  m_Center: {x: 0, y: -.00192512572, z: 0}
+  m_Size: {x: 15.1492262, y: 9.63596344, z: 6.19999981}
+  m_Center: {x: -.00461323746, y: 4.85168028, z: 0}
 --- !u!95 &9506686
 Animator:
   serializedVersion: 3
@@ -241,6 +259,44 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11435744
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 127434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  prefixBackup: -1
+  observed: {fileID: 0}
+  synchronization: 3
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 486340}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  isRuntimeInstantiated: 0
+--- !u!114 &11461122
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 127434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -5,15 +5,17 @@ public class ControllerGUI : MonoBehaviour {
 
     public GameObject[] objectArray;
     public GameObject camera;
-    public GameObject RobotBase;
+    public GameObject[] basePlates;
+    public GameObject robotBase;
+    public GameObject table;
 
     private bool openMenu = false;
     private GameObject currentObject;
-    private ArrayList robotComponents = new ArrayList();
+    public ArrayList robotComponents = new ArrayList();
+    private bool baseplateSet = false;
 
 	// Use this for initialization
 	void Start () {
-        robotComponents.Add(RobotBase);
 	}
 	
 	// Update is called once per frame
@@ -33,7 +35,24 @@ public class ControllerGUI : MonoBehaviour {
 
     void OnGUI()
     {
-        if (openMenu)
+        if(!baseplateSet){ //runs if theres no baseplate for this player yet, will spawn a new baseplate over the table
+            int boxL = 160; //Horizontal lenght of the menu
+            GUI.Box(new Rect(10, 10, boxL, 30 + 30 * basePlates.Length), "Spawn Menu");
+
+            for (int i = 0; i < basePlates.Length; i++)
+            {
+                if (GUI.Button(new Rect(20, 40 + (30 * i), boxL - 20, 20), "" + basePlates[i].name))
+                {
+                    GUI.Box(new Rect(10, 10, boxL, 30 + 30 * basePlates.Length), "Spawn Menu");
+                    GameObject tempBasePlate = (GameObject)PhotonNetwork.Instantiate(basePlates[i].name, table.transform.FindChild("TableSurface").position + new Vector3(0f, 0.1f, 0f), Quaternion.identity, 0);
+                    robotComponents.Add(tempBasePlate);
+                    baseplateSet = true;
+                }
+            }
+            return;
+        }
+        //if (openMenu)
+        if(true)
         {
             int boxL = 120; //Horizontal lenght of the menu
 
@@ -71,7 +90,10 @@ public class ControllerGUI : MonoBehaviour {
 
             if (hit.collider)
             {
-                currentObject = (GameObject)Instantiate(rezObject, hit.point, Quaternion.identity);
+                //currentObject = (GameObject)Instantiate(rezObject, hit.point, Quaternion.identity);
+                Debug.Log(rezObject.name);
+                currentObject = (GameObject)PhotonNetwork.Instantiate(rezObject.name, hit.point, Quaternion.identity, 0);
+
                 currentObject.transform.rotation.Set(0, 0, 0, 0);
             }
         }
@@ -84,6 +106,8 @@ public class ControllerGUI : MonoBehaviour {
         int layerMask = LayerMask.GetMask("SpawnCollide");
 
         Ray ray = camera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+
+        Debug.DrawRay(ray.origin, ray.direction, Color.yellow, 1f, true);
 
         if (Physics.Raycast(ray, out hit, 1000.0f, layerMask))
         {
@@ -113,15 +137,21 @@ public class ControllerGUI : MonoBehaviour {
             }
             else
             {
+                Debug.DrawRay(ray.origin, ray.direction, Color.blue, 1f, true);
+
                 Vector3 target = new Vector3(hit.point.x, hit.point.y, hit.point.z);
 
                 //currentObject.transform.Rotate(Vector3.up, Input.GetAxis("Mouse ScrollWheel") * 100);
 
-                Vector3 offset = new Vector3(0, currentObject.GetComponent<Collider>().bounds.size.y / 2, 0);
+
+                //Vector3 offset = currentObject.transform.position - currentObject.GetComponent<Collider>().bounds.;
+                Vector3 offset = currentObject.transform.position - currentObject.GetComponent<Collider>().ClosestPointOnBounds(hit.point);
+                //Vector3 offset = new Vector3(0, currentObject.GetComponent<Collider>().bounds.size.y / 2, 0);
+                
                 if (Input.GetButton("Shift"))
                 {
                     //offset = new Vector3(1f - (hit.point.x % 1), currentObject.GetComponent<Collider>().bounds.size.y / 2, 1f - (hit.point.z % 1));
-                    target += new Vector3(0.5f - (hit.point.x % 1), hit.point.y, 0.5f - (hit.point.z % 1));
+                    target += new Vector3(0.1f - (hit.point.x % 0.1f), hit.point.y, 0.1f - (hit.point.z % 0.1f));
 
                 }
 

@@ -22,8 +22,9 @@ public class EditorInstantiator : MonoBehaviour {
         }
 
 
-        this.gameObject.transform.position = networkManager.tables[emptyTableID].transform.position + new Vector3(0, 1f, 0);//Setting the camara start position
+        this.gameObject.transform.position = networkManager.tables[emptyTableID].transform.FindChild("TableSurface").position + new Vector3(0f, 0.1f, 0f);//Setting the camara start position
         this.gameObject.GetComponent<CameraControllerScript>().focusObject = networkManager.tables[emptyTableID]; //Setting the camara focus object to the desired table.
+        this.gameObject.GetComponent<ControllerGUI>().table = networkManager.tables[emptyTableID]; //gives the rez script the table to spawn the baseplate
 
 	}
     void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
