@@ -141,17 +141,34 @@ public class ControllerGUI : MonoBehaviour {
 
                 Vector3 target = new Vector3(hit.point.x, hit.point.y, hit.point.z);
 
+                //fucking dragons
                 //currentObject.transform.Rotate(Vector3.up, Input.GetAxis("Mouse ScrollWheel") * 100);
 
-
                 //Vector3 offset = currentObject.transform.position - currentObject.GetComponent<Collider>().bounds.;
-                Vector3 offset = currentObject.transform.position - currentObject.GetComponent<Collider>().ClosestPointOnBounds(hit.point);
+                //Vector3 offset = currentObject.transform.position - currentObject.GetComponent<Collider>().ClosestPointOnBounds(hit.point);
                 //Vector3 offset = new Vector3(0, currentObject.GetComponent<Collider>().bounds.size.y / 2, 0);
                 
-                if (Input.GetButton("Shift"))
+                /*
+                Ray boundRay = new Ray(currentObject.GetComponent<Collider>().bounds.center, 
+                    currentObject.GetComponent<Collider>().bounds.ClosestPoint(hit.point) - currentObject.GetComponent<Collider>().bounds.center); //calculates a ray from object to hit though the nearest point of the boundray
+
+                Debug.DrawRay(boundRay.origin, boundRay.direction, Color.magenta, 0.2f, true);
+                RaycastHit boundRayHit;
+                Vector3 offset = Vector3.zero;
+
+                if (Physics.Raycast(boundRay, out boundRayHit, 1000.0f, layerMask))
+                {
+                    offset = currentObject.GetComponent<Collider>().bounds.center - boundRayHit.point;
+                }
+                */
+                Vector3 offset = new Vector3(0, currentObject.GetComponent<Collider>().bounds.size.y / 2, 0);
+                offset += (currentObject.transform.position - currentObject.GetComponent<Collider>().bounds.center);
+                if (Input.GetButton("Shift")) //temp snap thing, not really working
                 {
                     //offset = new Vector3(1f - (hit.point.x % 1), currentObject.GetComponent<Collider>().bounds.size.y / 2, 1f - (hit.point.z % 1));
-                    target += new Vector3(0.1f - (hit.point.x % 0.1f), hit.point.y, 0.1f - (hit.point.z % 0.1f));
+                   
+                    Vector3 hitPontNormalized = hit.point.normalized; //the normalized is to check if we're negative in which case invert the 0.05f offset
+                    target += new Vector3(0.05f - (hit.point.x % 0.1f), 0, 0.05f - (hit.point.z % 0.1f));
 
                 }
 

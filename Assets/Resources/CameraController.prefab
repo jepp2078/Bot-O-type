@@ -190,6 +190,7 @@ MonoBehaviour:
   - {fileID: 188686, guid: c85f401f414814245929b8984884a55f, type: 2}
   - {fileID: 127434, guid: a3cb08e9e05755746843d5a1446f6af6, type: 2}
   - {fileID: 192048, guid: 51f26c623c43f3948892f8e92275b1c6, type: 2}
+  - {fileID: 108606, guid: a4c608eb29c17224f929e4836747d763, type: 2}
   camera: {fileID: 122990}
   basePlates:
   - {fileID: 166924, guid: bcaba6d232adf97468cfdd6e3e3097a6, type: 2}
