@@ -8,11 +8,15 @@ public class ControllerGUI : MonoBehaviour {
     public GameObject[] basePlates;
     public GameObject robotBase;
     public GameObject table;
+    public Material highLightMat;
 
     private bool openMenu = false;
-    private GameObject currentObject;
-    public ArrayList robotComponents = new ArrayList();
     private bool baseplateSet = false;
+    private ArrayList robotComponents = new ArrayList();
+    
+    public GameObject currentObject;
+    public GameObject highLightedObject;
+    private ArrayList oldMat = new ArrayList();
 
 	// Use this for initialization
 	void Start () {
@@ -25,12 +29,27 @@ public class ControllerGUI : MonoBehaviour {
             MoveTheObject();
         }
 
+        /*
 	    if(Input.GetKeyDown(KeyCode.Q)){
 			openMenu = true;
 		}
 		if(Input.GetKeyUp(KeyCode.Q)){
 			openMenu = false;
 		}
+        */
+
+        if (Input.GetButtonDown("Fire1") && currentObject == null)
+        {
+            if(highLightedObject != null){
+                Material[] oldMatA = (Material[])oldMat.ToArray(typeof(Material));
+
+                for (int i = 0; i < oldMatA.Length; i++)
+                    highLightedObject.GetComponentsInChildren<Renderer>()[i].material = oldMatA[i];
+            }
+            
+            highLightedObject = null;
+            highLight();
+        }
 	}
 
     void OnGUI()
@@ -75,6 +94,29 @@ public class ControllerGUI : MonoBehaviour {
             {
                 com.GetComponent<Rigidbody>().isKinematic = false;
             }
+        }
+    }
+
+    void highLight()
+    {
+        RaycastHit hit;
+
+        int layerMask = LayerMask.GetMask("SpawnCollide");
+
+        Ray ray = camera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+
+        Debug.DrawRay(ray.origin, ray.direction, Color.yellow, 1f, true);
+
+        if (Physics.Raycast(ray, out hit, 1000.0f, layerMask))
+        {
+            highLightedObject = hit.rigidbody.gameObject;
+            oldMat = new ArrayList();
+            foreach(Renderer render in highLightedObject.GetComponentsInChildren<Renderer>()){
+                oldMat.Add(render.material);
+                render.material = highLightMat;
+            }
+            //oldMat = highLightedObject.GetComponentsInChildren<Renderer>().material;
+            //highLightedObject.GetComponent<Renderer>().material = highLightMat;
         }
     }
 

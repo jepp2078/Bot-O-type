@@ -74,7 +74,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 118270}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .16080305, y: 1.16999996, z: 2.54084945}
+  m_LocalPosition: {x: .862650633, y: 1.03873277, z: -7.53743982}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 420508}
@@ -198,6 +198,9 @@ MonoBehaviour:
   - {fileID: 195968, guid: 7f8b982e234b1714e9927f935401cd12, type: 2}
   robotBase: {fileID: 0}
   table: {fileID: 0}
+  highLightMat: {fileID: 2100000, guid: 2d3b4172315a0c345b07e74bd4316533, type: 2}
+  currentObject: {fileID: 0}
+  highLightedObject: {fileID: 0}
 --- !u!114 &11484092
 MonoBehaviour:
   m_ObjectHideFlags: 1
