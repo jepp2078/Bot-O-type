@@ -14,6 +14,7 @@ GameObject:
   - 54: {fileID: 5435378}
   - 114: {fileID: 11406372}
   - 114: {fileID: 11435770}
+  - 114: {fileID: 11427264}
   m_Layer: 8
   m_Name: BasePlate50x50
   m_TagString: Untagged
@@ -116,6 +117,18 @@ MonoBehaviour:
   viewIdField: 0
   instantiationId: -1
   isRuntimeInstantiated: 0
+--- !u!114 &11427264
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 166924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc6fa982118771f418a79b40dacf042d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 177616, guid: 1f315700773323643b500e3c9152cd18, type: 2}
 --- !u!114 &11435770
 MonoBehaviour:
   m_ObjectHideFlags: 1

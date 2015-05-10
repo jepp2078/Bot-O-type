@@ -199,6 +199,7 @@ MonoBehaviour:
   robotBase: {fileID: 0}
   table: {fileID: 0}
   highLightMat: {fileID: 2100000, guid: 2d3b4172315a0c345b07e74bd4316533, type: 2}
+  button: {fileID: 177616, guid: 1f315700773323643b500e3c9152cd18, type: 2}
   currentObject: {fileID: 0}
   highLightedObject: {fileID: 0}
 --- !u!114 &11484092

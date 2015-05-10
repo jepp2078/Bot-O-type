@@ -9,14 +9,23 @@ public class ControllerGUI : MonoBehaviour {
     public GameObject robotBase;
     public GameObject table;
     public Material highLightMat;
+    public GameObject button;
 
     private bool openMenu = false;
     private bool baseplateSet = false;
     private ArrayList robotComponents = new ArrayList();
     
+    private Quaternion spawnRotation = Quaternion.identity;
+
     public GameObject currentObject;
     public GameObject highLightedObject;
+    private GameObject tempButton;
     private ArrayList oldMat = new ArrayList();
+
+    //used to check if we're rotating camera or clicking
+    private float fireDownTimer = 0;
+    private float fireDownLimit = 0.15f;
+
 
 	// Use this for initialization
 	void Start () {
@@ -24,32 +33,48 @@ public class ControllerGUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (currentObject != null)
+        if (Input.GetButton("Fire1"))
+            fireDownTimer += Time.deltaTime;
+
+
+        if (Input.GetButton("Delete") && highLightedObject != null)
         {
-            MoveTheObject();
+            robotComponents.Remove(highLightedObject);
+            highLightedObject.GetComponent<UIPopup>().unhighlighted();
+            Destroy(highLightedObject);
+            highLightedObject = null;
+            //Destroy(tempButton);
         }
 
-        /*
-	    if(Input.GetKeyDown(KeyCode.Q)){
-			openMenu = true;
-		}
-		if(Input.GetKeyUp(KeyCode.Q)){
-			openMenu = false;
-		}
-        */
-
-        if (Input.GetButtonDown("Fire1") && currentObject == null)
+        if (Input.GetButtonUp("Fire1") && currentObject == null && fireDownTimer < fireDownLimit)
         {
+            fireDownTimer = 0;
             if(highLightedObject != null){
                 Material[] oldMatA = (Material[])oldMat.ToArray(typeof(Material));
 
                 for (int i = 0; i < oldMatA.Length; i++)
                     highLightedObject.GetComponentsInChildren<Renderer>()[i].material = oldMatA[i];
+
+                UIPopup tempUI = highLightedObject.GetComponent<UIPopup>();
+
+                if (tempUI != null)
+                    highLightedObject.GetComponent<UIPopup>().unhighlighted();
+
             }
-            
+            //Destroy(tempButton);
+
             highLightedObject = null;
+            Debug.Log("highlight");
             highLight();
         }
+
+        if (currentObject != null)
+        {
+            MoveTheObject();
+        }
+
+        if (Input.GetButtonUp("Fire1"))
+            fireDownTimer = 0;
 	}
 
     void OnGUI()
@@ -70,23 +95,22 @@ public class ControllerGUI : MonoBehaviour {
             }
             return;
         }
-        //if (openMenu)
-        if(true)
+
+
+        int boxLen = 120; //Horizontal lenght of the menu
+
+        // Make a background box
+        GUI.Box(new Rect(10, 10, 120, 30 + 30 * objectArray.Length), "Spawn Menu");
+
+        for (int i = 0; i < objectArray.Length; i++)
         {
-            int boxL = 120; //Horizontal lenght of the menu
-
-            // Make a background box
-            GUI.Box(new Rect(10, 10, 120, 30 + 30 * objectArray.Length), "Spawn Menu");
-
-            for (int i = 0; i < objectArray.Length; i++)
+            if (GUI.Button(new Rect(20, 40 + (30 * i), boxLen - 20, 20), "" + objectArray[i].name))
             {
-                if (GUI.Button(new Rect(20, 40 + (30 * i), boxL - 20, 20), "" + objectArray[i].name))
-                {
-                    Debug.Log("placing" + objectArray[i].name);
-                    rezItem(objectArray[i]);
-                }
+                Debug.Log("placing" + objectArray[i].name);
+                rezItem(objectArray[i]);
             }
         }
+        
 
         if (Input.GetButton("Submit"))
         {
@@ -115,8 +139,11 @@ public class ControllerGUI : MonoBehaviour {
                 oldMat.Add(render.material);
                 render.material = highLightMat;
             }
-            //oldMat = highLightedObject.GetComponentsInChildren<Renderer>().material;
-            //highLightedObject.GetComponent<Renderer>().material = highLightMat;
+
+            UIPopup tempUI = highLightedObject.GetComponent<UIPopup>();
+            if (tempUI != null)
+                tempUI.highlighted(camera);
+
         }
     }
 
@@ -124,7 +151,6 @@ public class ControllerGUI : MonoBehaviour {
     {
         RaycastHit hit;
         Ray ray = new Ray(camera.transform.position, camera.transform.forward);
-        //Debug.DrawRay (transform.position, transform.forward*rayLenght, Color.green, 10, true);
 
         if (Physics.Raycast(ray, out hit, 100))
         {
@@ -132,9 +158,8 @@ public class ControllerGUI : MonoBehaviour {
 
             if (hit.collider)
             {
-                //currentObject = (GameObject)Instantiate(rezObject, hit.point, Quaternion.identity);
                 Debug.Log(rezObject.name);
-                currentObject = (GameObject)PhotonNetwork.Instantiate(rezObject.name, hit.point, Quaternion.identity, 0);
+                currentObject = (GameObject)PhotonNetwork.Instantiate(rezObject.name, hit.point, spawnRotation, 0);
 
                 currentObject.transform.rotation.Set(0, 0, 0, 0);
             }
@@ -153,11 +178,10 @@ public class ControllerGUI : MonoBehaviour {
 
         if (Physics.Raycast(ray, out hit, 1000.0f, layerMask))
         {
-            if (Input.GetButton("Fire1"))
+            if (Input.GetButtonUp("Fire1") && fireDownTimer < fireDownLimit)
             {
                 currentObject.layer = LayerMask.NameToLayer("SpawnCollide");
 
-                //FixedJoint joint = currentObject.AddComponent<FixedJoint>();
                 ConfigurableJoint joint = currentObject.AddComponent<ConfigurableJoint>();
 
                 joint.connectedBody = hit.rigidbody;
@@ -184,20 +208,19 @@ public class ControllerGUI : MonoBehaviour {
                 Vector3 target = new Vector3(hit.point.x, hit.point.y, hit.point.z);
                 if (Input.GetButtonDown("RotateC"))
                 {
-                    currentObject.transform.Rotate(Vector3.up, 45f);
-
+                    spawnRotation *= Quaternion.Euler(0f, 45f, 0f);
+                    currentObject.transform.rotation = spawnRotation;
                 }
                 else if (Input.GetButtonDown("RotateCCW"))
                 {
-                    currentObject.transform.Rotate(Vector3.up, -45f);
-
+                    spawnRotation *= Quaternion.Euler(0f, -45f, 0f);
+                    currentObject.transform.rotation = spawnRotation;
                 }
 
                 //fucking dragons
 
                 //Vector3 offset = currentObject.transform.position - currentObject.GetComponent<Collider>().bounds.;
                 //Vector3 offset = currentObject.transform.position - currentObject.GetComponent<Collider>().ClosestPointOnBounds(hit.point);
-                //Vector3 offset = new Vector3(0, currentObject.GetComponent<Collider>().bounds.size.y / 2, 0);
                 
                 /*
                 Ray boundRay = new Ray(currentObject.GetComponent<Collider>().bounds.center, 
